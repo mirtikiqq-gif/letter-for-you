@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#281321">
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Маленькое письмо для тебя.">
+<meta name="apple-mobile-web-app-title" content="Для тебя">
+<link rel="manifest" href="./app.webmanifest">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<title>Письмо для тебя</title>
+<style>
+:root{color-scheme:dark;--ink:#fff1e7;--muted:#edc1c7;--accent:#ffd1c2;--background:#281321}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;min-height:100svh;background:radial-gradient(ellipse at 50% 39%,#623044 0%,#3f2133 36%,var(--background) 73%);color:var(--ink);font:16px/1.6 system-ui,sans-serif;display:grid;place-items:center;padding:max(30px,env(safe-area-inset-top)) 20px max(30px,env(safe-area-inset-bottom))}
+main{width:min(100%,39rem);text-align:center;padding:clamp(23px,5vw,56px) 12px;border:1px solid #e4a0a032;border-radius:26px;background:#2b14242e;position:relative}
+h1,h2{font:normal clamp(2.5rem,8vw,4.6rem)/1.04 Georgia,serif;letter-spacing:-.045em;margin:0}
+h1{margin:0 auto;max-width:9em}
+.intro{color:var(--muted);margin:16px 0 27px}
+details{margin:auto;max-width:31rem}
+summary{list-style:none;cursor:pointer;width:fit-content;margin:auto;border-radius:30px;display:grid;justify-items:center;gap:22px;touch-action:manipulation}
+summary::-webkit-details-marker{display:none}
+summary:focus-visible{outline:2px solid var(--accent);outline-offset:7px}
+.label{display:inline-block;padding:10px 26px;border-radius:30px;font-weight:650;color:#3b1830;background:var(--accent);min-inline-size:165px}
+.envelope{--width:clamp(145px,54vw,242px);position:relative;width:var(--width);aspect-ratio:1.62;border-radius:10px;background:#e9a498;isolation:isolate;box-shadow:0 19px 46px #190c1790;transition:transform .24s ease}
+.envelope::before,.envelope::after{content:"";position:absolute;inset:0;border-radius:inherit}
+.envelope::before{background:#edb3a4;clip-path:polygon(0 100%,0 3%,50% 60%,100% 3%,100% 100%);z-index:1}
+.envelope::after{background:#ffd4c2;clip-path:polygon(0 0,100% 0,100% 3%,53% 65%,47% 65%,0 3%);z-index:2}
+.seal{position:absolute;display:grid;place-items:center;z-index:3;left:50%;top:60%;transform:translate(-50%,-50%);width:40px;height:40px;border-radius:50%;background:#963951;color:#ffe0d3;font:23px Georgia,serif;box-shadow:0 3px 5px #58203965}
+summary:hover .envelope{transform:translateY(-4px) rotate(-1deg)}
+.close,.letter{display:none}
+details[open] .envelope,details[open] .open{display:none}
+details[open] .close{display:block;background:none;border:1px solid #e4a0a079;color:var(--ink);font-weight:500}
+details[open]{display:flex;flex-direction:column-reverse;gap:18px}
+details[open] .letter{display:block;animation:unfold .55s ease both}
+main:has(details[open]) .cover{display:none}
+.letter{position:relative;text-align:left;background:#fff0e1;color:#492734;border-radius:4px 22px 4px 22px;padding:clamp(24px,6vw,54px);box-shadow:0 18px 44px #200e1b70}
+.letter h2{font-size:clamp(2.3rem,8vw,4rem);color:#822f4b;margin-bottom:.52em}
+.letter p{margin:0 0 1em;font:1.13rem/1.55 Georgia,serif}
+.letter p:last-child{margin:0}
+.heart{display:block;text-align:right;color:#963951;font-size:1.6rem;line-height:1;margin-top:12px}
+@keyframes unfold{from{opacity:0;transform:translateY(13px) scale(.98)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+  <header class="cover">
+    <h1>Письмо для тебя</h1>
+    <p class="intro">Есть кое-что, что я хочу тебе сказать.</p>
+  </header>
+  <details id="envelope">
+    <summary>
+      <span class="envelope" aria-hidden="true"><span class="seal">♥</span></span>
+      <span class="label open">Открыть письмо</span>
+      <span class="label close">Закрыть письмо</span>
+    </summary>
+    <article class="letter" aria-labelledby="letter-title">
+      <h2 id="letter-title">Я люблю тебя.</h2>
+      <p>Иногда случается что-то совсем обычное, а я уже думаю, как расскажу тебе об этом. И улыбаюсь заранее, потому что представляю, как ты отреагируешь.</p>
+      <p>Мне нравится слушать, как ты увлечённо о чём-то рассказываешь. Нравится смеяться с тобой над мелочами. И даже когда нам нечего сказать, мне хорошо просто быть рядом.</p>
+      <p>Я люблю тебя. И очень хочу, чтобы у нас было ещё много таких обычных дней вместе.</p>
+      <span class="heart" aria-hidden="true">♥</span>
+    </article>
+  </details>
+</main>
+<script>
+const isTelegram = /(?:^|[&#])tgWebApp(?:Data|Version)=/.test(location.hash);
+if (isTelegram) {
+  const bridge = document.createElement('script');
+  bridge.src = 'https://telegram.org/js/telegram-web-app.js';
+  bridge.onload = () => {
+    const app = window.Telegram.WebApp;
+    app.ready();
+    app.expand();
+    document.getElementById('envelope').addEventListener('toggle', event => {
+      if (event.target.open && app.isVersionAtLeast('6.1')) {
+        app.HapticFeedback.impactOccurred('soft');
+      }
+    });
+  };
+  document.head.append(bridge);
+}
+if (!isTelegram && location.protocol === 'https:' && 'serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').catch(() => {});
+}
+</script>
+</body>
+</html>
